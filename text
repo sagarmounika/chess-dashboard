@@ -1,0 +1,8 @@
+alembic revision --autogenerate
+lip_bAMesoZcsGQHunNiTs5D
+\c chess_db
+/l
+\dt
+ select * from users;
+uvicorn main:app --reload
+alembic upgrade head 
