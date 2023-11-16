@@ -47,7 +47,6 @@ async def get_rating_history(
     session = berserk.TokenSession("lip_bAMesoZcsGQHunNiTs5D")
     client = berserk.Client(session=session)
     rating_history_data = client.users.get_rating_history(username)
-
     rating_history = []
 
     today = datetime.utcnow()
@@ -63,7 +62,13 @@ async def get_rating_history(
                 for point_entry in rating_data['points']:
                     point_date = datetime(point_entry[0], point_entry[1] + 1, point_entry[2])
                     rating_value = point_entry[3]
-                    points.append({"date": f"{point_entry[0]}-{point_entry[1] + 1}-{point_entry[2]}", "value": rating_value})
+                    points.append({
+                        "date": f"{point_entry[0]}-{point_entry[1] + 1}-{point_entry[2]}",
+                        "value": rating_value
+                    })
+
+                    if len(points) >= 30:
+                        break
 
                 rating_history.append({"name": name, "points": points})
         except Exception as e:
