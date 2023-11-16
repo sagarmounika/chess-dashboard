@@ -2,9 +2,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine import URL
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import os
 
-encoded_password = "Codetest25%40"
-DATABASE_URL = f"postgresql://postgres:{encoded_password}@localhost:5432/chess_db"
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 engine = create_engine(DATABASE_URL)
 
