@@ -7,6 +7,7 @@ from typing import List
 import berserk
 from datetime import datetime, timedelta
 # from app.security import oauth2_scheme, get_current_user
+import os
 from app.utils import JWTBearer
 router = APIRouter()
 
@@ -16,7 +17,9 @@ async def get_top_players(
     current_user: str = Depends(JWTBearer())
 
 ):
-    session = berserk.TokenSession("lip_bAMesoZcsGQHunNiTs5D")
+    # session = berserk.TokenSession("lip_bAMesoZcsGQHunNiTs5D")
+    
+    session = berserk.TokenSession(os.getenv("CHESS_TOKEN"))
     client = berserk.Client(session=session)
     top_players_data = client.users.get_leaderboard('classical', 50)
 
@@ -44,7 +47,8 @@ async def get_rating_history(
     db: Session = Depends(get_db),
     current_user: str = Depends(JWTBearer())
 ):
-    session = berserk.TokenSession("lip_bAMesoZcsGQHunNiTs5D")
+    # session = berserk.TokenSession("lip_bAMesoZcsGQHunNiTs5D")
+    session = berserk.TokenSession(os.getenv("CHESS_TOKEN"))
     client = berserk.Client(session=session)
     rating_history_data = client.users.get_rating_history(username)
     rating_history = []
