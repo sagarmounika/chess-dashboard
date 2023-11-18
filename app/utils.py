@@ -4,11 +4,15 @@ from fastapi import FastAPI, Depends, HTTPException,status
 from fastapi import Request, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from app.models.user import TokenTable
+import os
 
-ACCESS_TOKEN_EXPIRE_MINUTES = 30  
-ALGORITHM = "HS256"
-JWT_SECRET_KEY = "narscbjim@$@&^@&%^&RFghgjvbdsha"   
+# ACCESS_TOKEN_EXPIRE_MINUTES = 30  
+# ALGORITHM = "HS256"
+# JWT_SECRET_KEY = "narscbjim@$@&^@&%^&RFghgjvbdsha"   
 
+JWT_SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 def decodeJWT(jwtoken: str):
     try:
